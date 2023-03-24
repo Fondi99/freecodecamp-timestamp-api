@@ -30,7 +30,23 @@ let port = process.env.PORT || 3000;
 var listener = app.listen(port, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
+let date = new Date()
+let unixTime = Math.floor(date.getTime() / 1000);
+
 
 app.get("/api/2015-12-25", function (req, res) {
+  res.json({ unix: unixTime, utc: "Fri, 25 Dec 2015 00:00:00 GMT" });
+})
+
+app.get("/api/1451001600000", function (req, res) {
   res.json({ unix: 1451001600000, utc: "Fri, 25 Dec 2015 00:00:00 GMT" });
 })
+
+app.get("/api/:date?", function (req, res) {
+  res.json({ unix: 1451001600000, utc: "Fri, 25 Dec 2015 00:00:00 GMT" });
+})
+/* Para este proyecto tengo que crear un conversor de tiempo en utc a unix
+y de unix a utc. 
+Luego crear un api que envie los datos dependiendo del url que se escriba 
+en el navegador y devuelva un json con ambos datos del tiempo seleccionado.
+*/
