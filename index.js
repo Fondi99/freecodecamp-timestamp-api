@@ -32,8 +32,10 @@ var listener = app.listen(port, function () {
 });
 
 app.get("/api/:date", function (req, res) {
+  //Check if the date format is numeric or not. If it is, is Unix, if not, is UTC.
   if (isNaN(req.params.date)) {
     let date = new Date(req.params.date)
+    //Check if the date is valid or not
     if (new Date(date).toUTCString() == "Invalid Date") {
       res.json({ error: "Invalid Date" });
     } else {
@@ -44,4 +46,9 @@ app.get("/api/:date", function (req, res) {
     let date = new Date(parseInt(req.params.date))
     res.json({ unix: Date.parse(date), utc: new Date(date).toUTCString() });
   }
+})
+
+app.get("/api", function (req, res) {
+  let date = new Date()
+  res.json({ unix: Date.parse(date), utc: new Date(date).toUTCString() })
 })
